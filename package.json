@@ -1,0 +1,27 @@
+{
+  "name": "devs-in-the-detail",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fcscripters/Devs-In-The-Detail.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/fcscripters/Devs-In-The-Detail/issues"
+  },
+  "homepage": "https://github.com/fcscripters/Devs-In-The-Detail#readme",
+  "dependencies": {
+    "redis": "^2.2.1"
+  },
+  "devDependencies": {
+    "istanbul": "^0.3.22",
+    "shot": "^1.7.0",
+    "tape": "^4.2.1"
+  }
+}
