@@ -12,12 +12,29 @@ function handler(req,res){
       res.writeHead(200,{"Content-Type":"text/html"});
       res.end(index);
     }
-    else if(req.method === "GET" && req.url.indexOf('/question') > -1){
+    else if(req.method === "GET" && req.url.indexOf('/questions') > -1){
       var qid = req.url.split('/')[2].toString();
-
-      res.writeHead(200,{"Content-Type":"text/html"});
-      res.end(question);
+      console.log(qid);
+      res.write(question);
+      res.end();
     }
+    else {
+         fs.readFile(__dirname +req.url, function(err, file) {
+             if (err) {
+                 res.writeHead(404, {
+                     "Content-Type": "text/" + ext
+                 });
+                 console.log('error:'+err);
+                 res.end();
+             } else {
+                 var ext = req.url.split('.')[1];
+                 res.writeHead(200, {
+                     "Content-Type": "text/" + ext
+                 });
+                 res.end(file);
+             }
+         });
+     }
 }
 
 io.on('connection',manageConnection);
