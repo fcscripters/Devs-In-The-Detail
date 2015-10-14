@@ -8,9 +8,8 @@ var question = fs.readFileSync(__dirname + '/question.html');
 function handler(req,res){
 
     if(req.method === "GET" && req.url === '/'){
-      res.writeHead(200,{Location:"https://github.com/login/oauth/authorize"});
-
-      res.end();
+      res.writeHead(200,{"Content-Type": "text/html"});
+      res.end(index);
     }
     else if(req.method === "GET" && req.url.indexOf('/questions') > -1){
       var qid = req.url.split('/')[2].toString();

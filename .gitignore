@@ -1,4 +1,5 @@
 node_modules
+dump.rdb
 
 # Environment variables
 environment.env
