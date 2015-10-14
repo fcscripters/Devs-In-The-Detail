@@ -5,6 +5,7 @@ var io = require('socket.io')(server);
 var db = require('./DB.js');
 var index = fs.readFileSync(__dirname + '/index.html');
 var question = fs.readFileSync(__dirname + '/question.html');
+var port = process.env.PORT || 8000;
 
 function handler(req,res){
 
