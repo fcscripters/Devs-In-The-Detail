@@ -9,16 +9,10 @@ var qCount = 0;
 
 db.addQHash = function(username, question, date){
   console.log('im in the addQHash');
+  console.log(qCount);
   qCount ++;
   client.hmset(qCount, "username", username, "question", question, "date", date);
 };
-
-db.addQHash("conor", "what day is it?", "08/04/14");
-db.addQHash("dan", "what?", "08/05/14");
-db.addQHash("tom", "why?", "08/05/14");
-db.addQHash("bob", "where?", "08/05/14");
-db.addQHash("conor", "what day is it?", "08/04/14");
-db.addQHash("dan", "what?", "08/05/14");
 
 console.log(qCount);
 
@@ -28,7 +22,7 @@ db.addAHash = function(username, answer, date, vote){
 };
 
 var QDataArr = [];
-db.lastTenQs = function(qCount){
+db.lastTenQs = function(callback){
   console.log('im in the lastTenQs');
   var i = qCount;
   console.log(qCount);
@@ -45,10 +39,11 @@ db.lastTenQs = function(qCount){
     .hgetall(i-8)
     .hgetall(i-9)
     .exec(function(err, replies){
-        console.log('multi output=', replies);
-        res.write(JSON.stringify(replies));
+        //console.log('multi output=', replies);
+        callback(replies);
+        return(replies);
+        //res.write(JSON.stringify(replies));
   });
 };
-db.lastTenQs(qCount);
 
 module.exports = db;
