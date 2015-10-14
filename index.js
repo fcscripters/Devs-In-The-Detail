@@ -53,6 +53,6 @@ function manageConnection(socket){
   });
 }
 
-server.listen(8000,function(){
+server.listen(port,function(){
   console.log('listening on server:8000');
 });
