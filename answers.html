@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Answers</title>
+</head>
+
+<body>
+    <h2>Answers Page</h2>
+      <ul id="answerList">
+        <li id ="ans1">Hello</li>
+      </ul>
+    <a href="/index.html">Back</a>
+    <form id="answerForm"  action="" autocomplete="off">
+        <input id="answerInput"autocomplete="off" />
+        <button>Send</button>
+    </form>
+    <script type="text/javascript">
+    var socket = io();
+    document.getElementsByTagName('form')[0].addEventListener('submit', function(e) {
+        var input = document.getElementById('answerInput');
+        var messages = document.getElementById('answerList');
+        e.preventDefault();
+        socket.emit('answer in',
+            input.value);
+        input.value = '';
+    });
+
+
+    socket.on('answer out', function(reply) {
+        console.log(reply);
+        
+
+       answerList.innerHTML += ("<li id='ans2'>From " + reply+"</li>");
+
+    });
+    </script>
+</body>
+
+</html>
