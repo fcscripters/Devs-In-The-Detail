@@ -5,6 +5,7 @@ var io = require('socket.io')(server);
 var db = require('./DB.js');
 var index = fs.readFileSync(__dirname + '/index.html');
 var question = fs.readFileSync(__dirname + '/question.html');
+
 function handler(req,res){
 
     if(req.method === "GET" && req.url === '/'){

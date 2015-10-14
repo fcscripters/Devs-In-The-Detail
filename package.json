@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "./node_modules/.bin/tape ./test/* && npm run coverage"
+    "test": "./node_modules/.bin/tape ./test/* && npm run coverage",
+    "start": "node index.js"
   },
   "repository": {
     "type": "git",
@@ -26,6 +27,6 @@
     "tape": "^4.2.1"
   },
     "engines": {
-    "node": "4.1.1"
+    "node": "4.0.0"
   }
 }
