@@ -51,6 +51,7 @@ function manageConnection(socket){
     db.lastTenQs(lastTenQsCallback);
   });
 }
+
 server.listen(8000,function(){
   console.log('listening on server:8000');
 });

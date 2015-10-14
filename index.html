@@ -30,11 +30,16 @@
         input.value = '';
       });
 
+<<<<<<< HEAD
       socket.on('message out', function(reply){
         console.log(reply);
         console.log(reply[0].question);
 
         messages.innerHTML += ("<li id = 'li1'>From "+reply[0].username+" on "+reply[0].date+' Question: '+reply[0].question+"</li>");
+=======
+      socket.on('message out', function(msg){
+        messages.innerHTML += ("<li id = 'li1'>"+msg+"</li>");
+>>>>>>> master
       });
 
       document.getElementById('question1').addEventListener('click',function(e) {
