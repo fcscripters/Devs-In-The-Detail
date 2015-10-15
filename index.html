@@ -20,7 +20,30 @@
       </form>
     <script src="/socket.io/socket.io.js"></script>
     <script>
+    var requestOnload = new XMLHttpRequest();
+    requestOnload.onreadystatechange = function() {
+      if (requestOnload.readyState === 4) {
+        array = JSON.parse(requestOnload.responseText);
+        console.log(array);
+        for (var i=0 ; i<10 ; i++){
+          messages.innerHTML += ("<li id = 'li1'>From "+array[i].username+" on "+array[i].date+' Question: '+array[i].question+"</li>");
+        }
+      }
+    }
+    requestOnload.open("GET","/topten", true);
+    requestOnload.send();
+
       var socket = io();
+
+      // socket.emit('topTen','');
+      // socket.on('topTen out', function(reply, qCount){
+      //   console.log(reply);
+      //   messages.innerHTML = "";
+      //   for (var i=0 ; i<10 ; i++){
+      //     messages.innerHTML += ("<li id = 'li1'>From "+reply[i].username+" on "+reply[i].date+' Question: '+reply[i].question+"</li>");
+      //   }
+      // });
+
       document.getElementsByTagName('form')[0].addEventListener('submit',function(e){
         var input = document.getElementById('m');
         var messages = document.getElementById('messages');
@@ -30,12 +53,12 @@
         input.value = '';
       });
 
-      socket.on('message out', function(reply, qCount){
+      socket.on('message out', function(replies, qCount){
         console.log(qCount);
-        console.log(reply);
-        messages.innerHTML = "";
-        for (var i=1 ; i<11 ; i++){
-          messages.innerHTML += ("<li id = 'li1'>From "+reply[i].username+" on "+reply[i].date+' Question: '+reply[i].question+"</li>");
+        console.log(replies);
+        messages.innerHTML='';
+        for (var i=0 ; i<10 ; i++){
+          messages.innerHTML += ("<li id = 'li1'>From "+replies[i].username+" on "+replies[i].date+' Question: '+replies[i].question+"</li>");
         }
       });
 
