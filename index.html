@@ -45,11 +45,16 @@
 
 
     var socket = io();
-
-    document.getElementsByTagName('form')[0].addEventListener('submit', function(e) {
-        var input = document.getElementById('questionInput');
+ 
+      document.getElementsByTagName('form')[0].addEventListener('submit',function(e){
+        var input = document.getElementById('m');
+        var inputClean = input.value.replace(/[\>\<\'\"\%\\]/g,"")
+        console.log('--input',inputClean);
+        var messages = document.getElementById('messages');
         e.preventDefault();
-        socket.emit('question in', input.value);
+        socket.emit('question in',
+        inputClean);
+
         input.value = '';
     });
 
