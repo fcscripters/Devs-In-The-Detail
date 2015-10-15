@@ -17,20 +17,23 @@
         <button>Send</button>
     </form>
     <script type="text/javascript">
+
     var socket = io();
     document.getElementsByTagName('form')[0].addEventListener('submit', function(e) {
         var input = document.getElementById('answerInput');
+        var inputClean = input.value.replace(/[\>\<\'\"]/g,"")
+        console.log('--input',input);
         var messages = document.getElementById('answerList');
         e.preventDefault();
         socket.emit('answer in',
-            input.value);
+            inputClean);
         input.value = '';
     });
 
 
     socket.on('answer out', function(reply) {
         console.log(reply);
-        
+
 
        answerList.innerHTML += ("<li id='ans2'>From " + reply+"</li>");
 
