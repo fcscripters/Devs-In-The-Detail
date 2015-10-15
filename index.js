@@ -14,9 +14,10 @@ function handler(req, res) {
             "Content-Type": "text/html"
         });
         res.end(index);
-    } else if (req.method === "GET" && req.url.indexOf('/questions') > -1) {
-        var qid = req.url.split('/')[2].toString();
-        console.log(qid);
+    } else if (req.method === "POST" && req.url.indexOf('/questions') > -1) {
+        var qid = req.url.split('/');
+        //('/')[2].toString();
+        console.log("Im in the GET Request questions From FrontEnd" + qid);
         res.write(answers);
         res.end();
     } else {
@@ -47,7 +48,7 @@ function manageConnection(socket) {
         console.log('user disconnected');
     });
     socket.on('message in', function(msg) {
-        console.log(msg);
+        //console.log(msg);
         db.addQHash('User', msg, '01/01/2000');
 
         function lastTenQsCallback(replies) {
@@ -57,9 +58,9 @@ function manageConnection(socket) {
     });
 
     socket.on('answer in', function(answer) {
-        console.log(answer);
+        //console.log(answer);
           db.addAHash('User', answer, '01/01/2000');
-          io.emit('answer out', answer);;
+          io.emit('answer out', answer);
 
 /*
           function lastTenQsCallback(replies) {
