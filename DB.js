@@ -11,7 +11,7 @@ db.addQHash = function(username, question, date){
   console.log('im in the addQHash');
   console.log(qCount);
   qCount ++;
-  client.hmset(qCount, "username", username, "question", question, "date", date);
+  client.hmset(qCount, "username", username, "question", question, "date", date, "QID", qCount);
 };
 
 console.log(qCount);
@@ -26,7 +26,6 @@ db.lastTenQs = function(callback){
   console.log('im in the lastTenQs');
   var i = qCount;
   console.log(qCount);
-  //this must happen for each of the last 10 Qs
   client.multi()
     .hgetall(i)
     .hgetall(i-1)
@@ -39,11 +38,12 @@ db.lastTenQs = function(callback){
     .hgetall(i-8)
     .hgetall(i-9)
     .exec(function(err, replies){
-        //console.log('multi output=', replies);
-        callback(replies);
+
+        callback(replies,qCount);
         return(replies);
-        //res.write(JSON.stringify(replies));
   });
+
+
 };
 
 module.exports = db;

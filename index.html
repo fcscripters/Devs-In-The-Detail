@@ -20,7 +20,30 @@
       </form>
     <script src="/socket.io/socket.io.js"></script>
     <script>
+    var requestOnload = new XMLHttpRequest();
+    requestOnload.onreadystatechange = function() {
+      if (requestOnload.readyState === 4) {
+        array = JSON.parse(requestOnload.responseText);
+        console.log(array);
+        for (var i=0 ; i<10 ; i++){
+          messages.innerHTML += ("<li id = 'li1'>From "+array[i].username+" on "+array[i].date+' Question: '+array[i].question+"</li>");
+        }
+      }
+    }
+    requestOnload.open("GET","/topten", true);
+    requestOnload.send();
+
       var socket = io();
+
+      // socket.emit('topTen','');
+      // socket.on('topTen out', function(reply, qCount){
+      //   console.log(reply);
+      //   messages.innerHTML = "";
+      //   for (var i=0 ; i<10 ; i++){
+      //     messages.innerHTML += ("<li id = 'li1'>From "+reply[i].username+" on "+reply[i].date+' Question: '+reply[i].question+"</li>");
+      //   }
+      // });
+
       document.getElementsByTagName('form')[0].addEventListener('submit',function(e){
         var input = document.getElementById('m');
         var messages = document.getElementById('messages');
@@ -32,27 +55,28 @@
 
 
       socket.on('message out', function(reply){
-        console.log(reply);
-        console.log(reply[0].question);
 
-        messages.innerHTML += ("<li id = 'li1'>From "+reply[0].username+" on "+reply[0].date+' Question: '+reply[0].question+"</li>");
 
+        messages.innerHTML='';
+        for (var i=0 ; i<10 ; i++){
+          var QID = "QID"+ reply[i].QID;
+          messages.innerHTML += ("<li>From "+reply[i].username+" on "+reply[i].date+" Question: "+reply[i].question+"<button id="+QID+" onclick=sendToAnswerPage("+ QID +")>Answers</button> </li>");
+        }
       });
 
-      document.getElementById('question1').addEventListener('click',function(e) {
-        // window.open("/question.html","_self");
+      function sendToAnswerPage (ID) {
         console.log('clicked question1');
         var request = new XMLHttpRequest();
         request.onreadystatechange = function(){
           if (request.readyState === 4){
-            //do something
-            console.log(request.responseText);
-            document.write(request.responseText);
+
           }
-        }
-        request.open('GET','/questions/'+'1',true)
-        request.send();
-      });
+
+
+        };
+      request.open('POST','/questions/' + ID,true);
+      request.send();
+      }
 
 
     </script>
