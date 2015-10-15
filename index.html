@@ -20,7 +20,30 @@
       </form>
     <script src="/socket.io/socket.io.js"></script>
     <script>
+    var requestOnload = new XMLHttpRequest();
+    requestOnload.onreadystatechange = function() {
+      if (requestOnload.readyState === 4) {
+        array = JSON.parse(requestOnload.responseText);
+        console.log(array);
+        for (var i=0 ; i<10 ; i++){
+          messages.innerHTML += ("<li id = 'li1'>From "+array[i].username+" on "+array[i].date+' Question: '+array[i].question+"</li>");
+        }
+      }
+    }
+    requestOnload.open("GET","/topten", true);
+    requestOnload.send();
+
       var socket = io();
+
+      // socket.emit('topTen','');
+      // socket.on('topTen out', function(reply, qCount){
+      //   console.log(reply);
+      //   messages.innerHTML = "";
+      //   for (var i=0 ; i<10 ; i++){
+      //     messages.innerHTML += ("<li id = 'li1'>From "+reply[i].username+" on "+reply[i].date+' Question: '+reply[i].question+"</li>");
+      //   }
+      // });
+
       document.getElementsByTagName('form')[0].addEventListener('submit',function(e){
         var input = document.getElementById('m');
         var messages = document.getElementById('messages');
@@ -32,29 +55,29 @@
 
 
       socket.on('message out', function(reply){
-        console.log(reply);
-        console.log(reply[0].question);
-        var QID = "QID"+ reply[0].QID;
-        messages.innerHTML += ("<li>From "+reply[0].username+" on "+reply[0].date+" Question: "+reply[0].question+"<button id="+QID+" onclick=sendToAnswerPage("+ QID +")>Answers</button> </li>");
+
+
+        messages.innerHTML='';
+        for (var i=0 ; i<10 ; i++){
+          var QID = "QID"+ reply[i].QID;
+          messages.innerHTML += ("<li>From "+reply[i].username+" on "+reply[i].date+" Question: "+reply[i].question+"<button id="+QID+" onclick=sendToAnswerPage("+ QID +")>Answers</button> </li>");
+        }
       });
 
       function sendToAnswerPage (ID) {
-      console.log ('IMin sendToAnswerPage');
-        // window.open("/question.html","_self");
-
+        console.log('clicked question1');
         var request = new XMLHttpRequest();
-          request.onreadystatechange = function(){
-            if (request.readyState === 4){
-
-            console.log(request.responseText);
-            document.write(request.responseText);
+        request.onreadystatechange = function(){
+          if (request.readyState === 4){
 
           }
+
 
         };
       request.open('POST','/questions/' + ID,true);
       request.send();
       }
+
 
     </script>
   </body>
