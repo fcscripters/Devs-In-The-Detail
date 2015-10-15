@@ -39,7 +39,7 @@ db.lastTenQs = function(callback){
     .hgetall(i-9)
     .exec(function(err, replies){
 
-        callback(replies,qCount);
+        callback(replies);
         return(replies);
   });
 

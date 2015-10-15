@@ -16,6 +16,7 @@ function handler(req, res) {
     res.end(index);
   } else if (req.method === 'GET' && req.url === '/topten') {
     db.lastTenQs(function(replies, qCount) {
+      //console.log("We are in the topten handler"+ replies);
       var filterReply = replies.filter(function(Qobj) {
         return Qobj;
       });
@@ -24,7 +25,8 @@ function handler(req, res) {
   } else if (req.method === "POST" && req.url.indexOf('/questions') > -1) {
     var qid = req.url.split('/');
     //('/')[2].toString();
-    console.log("Im in the GET Request questions From FrontEnd" + qid);
+    console.log("Im in the POST Request questions From FrontEnd" + qid[2]);
+    
     res.write(answers);
     res.end();
   } else {
@@ -54,12 +56,18 @@ function manageConnection(socket) {
   socket.on('disconnect', function() {
     console.log('user disconnected');
   });
-  socket.on('message in', function(msg) {
-    //console.log(msg);
+  socket.on('question in', function(msg) {
+    console.log( "I'm in the SOCKET" + msg);
     db.addQHash('User', msg, '01/01/2000');
-
+   
     function lastTenQsCallback(replies) {
-      io.emit('message out', replies);
+      
+     var filterReply2 = replies.filter(function(Qobj) {
+          return Qobj;
+      });
+      
+      io.emit('question out',filterReply2);
+      
     }
     db.lastTenQs(lastTenQsCallback);
   });
@@ -67,6 +75,8 @@ function manageConnection(socket) {
   socket.on('answer in', function(answer) {
     //console.log(answer);
     db.addAHash('User', answer, '01/01/2000');
+    
+
     io.emit('answer out', answer);
 
     /*
