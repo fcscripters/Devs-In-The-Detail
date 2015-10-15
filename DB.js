@@ -16,9 +16,9 @@ db.addQHash = function(username, question, date){
 
 console.log(qCount);
 
-db.addAHash = function(username, answer, date, vote){
+db.addAHash = function(username, answer, date){
   aCount ++;
-  client.hmset(aCount , "username", username, "answer", answer, "date", date, "vote", vote);
+  client.hmset(aCount , "username", username, "answer", answer, "date", date);
 };
 
 var QDataArr = [];
