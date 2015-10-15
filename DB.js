@@ -38,9 +38,12 @@ db.lastTenQs = function(callback){
     .hgetall(i-8)
     .hgetall(i-9)
     .exec(function(err, replies){
+
         callback(replies,qCount);
         return(replies);
   });
+
+
 };
 
 module.exports = db;

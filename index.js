@@ -14,7 +14,14 @@ function handler(req, res) {
       "Content-Type": "text/html"
     });
     res.end(index);
-  } else if (req.method === "GET" && req.url.indexOf('/questions') > -1) {
+  }else if (req.method === 'GET' && req.url === '/topten'){
+    db.lastTenQs(function(replies, qCount){
+      var filterReply =replies.filter(function(Qobj){
+        return Qobj ;
+      });
+      res.end(JSON.stringify(filterReply));
+    });
+  }else if (req.method === "GET" && req.url.indexOf('/questions') > -1) {
     var qid = req.url.split('/')[2].toString();
     console.log(qid);
     res.write(answers);
@@ -49,18 +56,27 @@ function manageConnection(socket) {
   socket.on('message in', function(msg) {
     console.log(msg);
     db.addQHash('User', msg, '01/01/2000');
-
     db.lastTenQs(lastTenQsCallback);
-    function lastTenQsCallback(replies, qCount) {
-      io.emit('message out', replies, qCount);
-    }
+      function lastTenQsCallback(replies, qCount) {
+        io.emit('message out', replies, qCount);
+      }
+
   });
+
+  // socket.on('topTen', function(msg2) {
+  //   console.log(msg2);
+  //   db.lastTenQs(lastTenQsCallback);
+  //   function lastTenQsCallback(replies, qCount) {
+  //     io.emit('topTen out', replies, qCount);
+  //   }
+  // });
 
   socket.on('answer in', function(answer) {
     console.log(answer);
     db.addAHash('User', answer, '01/01/2000');
     io.emit('answer out', answer);
   });
+
 }
 server.listen(port, function() {
   console.log('listening on server:8000');
