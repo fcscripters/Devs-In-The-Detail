@@ -16,10 +16,10 @@
         <p id="question1">Question</p>
         <p>Date</p>
     </div>
-    <form action="" autocomplete="off">
+    
         <input id="questionInput" autocomplete="off" />
-        <button>Send</button>
-    </form>
+        <button id="sendQuestion">Send</button>
+ 
     <script src="/socket.io/socket.io.js"></script>
     <script>
     var requestOnload = new XMLHttpRequest();
@@ -46,12 +46,13 @@
 
     var socket = io();
  
-      document.getElementsByTagName('form')[0].addEventListener('submit',function(e){
-        var input = document.getElementById('m');
+      document.getElementById('sendQuestion').addEventListener('click',function(e){
+        e.preventDefault();
+        var input = document.getElementById('questionInput');
         var inputClean = input.value.replace(/[\>\<\'\"\%\\]/g,"")
         console.log('--input',inputClean);
         var messages = document.getElementById('messages');
-        e.preventDefault();
+       
         socket.emit('question in',
         inputClean);
 
