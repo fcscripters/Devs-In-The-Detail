@@ -21,7 +21,7 @@
     var socket = io();
     document.getElementsByTagName('form')[0].addEventListener('submit', function(e) {
         var input = document.getElementById('answerInput');
-        var inputClean = input.value.replace(/[\>\<\'\"]/g,"")
+        var inputClean = input.value.replace(/[\>\<\'\"\%\\]/g,"")
         console.log('--input',input);
         var messages = document.getElementById('answerList');
         e.preventDefault();

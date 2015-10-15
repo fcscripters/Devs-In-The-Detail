@@ -77,7 +77,7 @@ function manageConnection(socket) {
   });
   socket.on('message in', function(msg) {
     //console.log(msg);
-    db.addQHash('User', msg, '01/01/2000');
+    db.addQHash(sessions.gituser, msg, new Date());
 
     function lastTenQsCallback(replies) {
       io.emit('message out', replies);
@@ -134,7 +134,8 @@ var getUserData = function(){
       console.log(body);
       var username = JSON.parse(body);
       var name = username.login;
-      console.log(name);
+      sessions.gituser = name;
+      console.log(name,sessions);
 
     });
   });
