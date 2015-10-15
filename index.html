@@ -31,7 +31,8 @@
       });
 
 
-      socket.on('message out', function(reply){
+      socket.on('message out', function(reply, qCount){
+        console.log(qCount);
         console.log(reply);
         console.log(reply[0].question);
 
