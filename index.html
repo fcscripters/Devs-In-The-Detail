@@ -53,27 +53,32 @@
         input.value = '';
       });
 
-      socket.on('message out', function(replies, qCount){
-        console.log(qCount);
-        console.log(replies);
+
+      socket.on('message out', function(reply){
+
+
         messages.innerHTML='';
         for (var i=0 ; i<10 ; i++){
-          messages.innerHTML += ("<li id = 'li1'>From "+replies[i].username+" on "+replies[i].date+' Question: '+replies[i].question+"</li>");
+          var QID = "QID"+ reply[i].QID;
+          messages.innerHTML += ("<li>From "+reply[i].username+" on "+reply[i].date+" Question: "+reply[i].question+"<button id="+QID+" onclick=sendToAnswerPage("+ QID +")>Answers</button> </li>");
         }
       });
 
-      document.getElementById('question1').addEventListener('click',function(e) {
+      function sendToAnswerPage (ID) {
         console.log('clicked question1');
         var request = new XMLHttpRequest();
         request.onreadystatechange = function(){
           if (request.readyState === 4){
-            console.log(request.responseText);
-            document.write(request.responseText);
+
           }
-        }
-        request.open('GET','/questions/'+'1',true)
-        request.send();
-      });
+
+
+        };
+      request.open('POST','/questions/' + ID,true);
+      request.send();
+      }
+
+
     </script>
   </body>
 </html>

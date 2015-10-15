@@ -11,7 +11,7 @@ db.addQHash = function(username, question, date){
   console.log('im in the addQHash');
   console.log(qCount);
   qCount ++;
-  client.hmset(qCount, "username", username, "question", question, "date", date);
+  client.hmset(qCount, "username", username, "question", question, "date", date, "QID", qCount);
 };
 
 console.log(qCount);
