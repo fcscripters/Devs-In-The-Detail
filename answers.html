@@ -2,44 +2,74 @@
 <html>
 
 <head>
-    <meta charset="utf-8">
-    <title>Answers</title>
+  <meta charset="utf-8">
+  <title>Answers</title>
 </head>
 
 <body>
-    <h2>Answers Page</h2>
-      <ul id="answerList">
-        <li id ="ans1">Hello</li>
-      </ul>
-    <a href="/index.html">Back</a>
-   
-        <input id="answerInput"autocomplete="off" />
-        <button id="sendAnswer">Send</button>
-  
-    <script type="text/javascript">
+  <h2>Answers Page</h2>
+  <div id='titleQuestion'></div>
+  <ul id="answerList">
+    <li id="ans1">Hello</li>
+  </ul>
+  <a href="/">Back</a>
+
+  <input id="answerInput" autocomplete="off" />
+  <button id="sendAnswer">Send</button>
+
+  <script type="text/javascript">
+    var requestOnload = new XMLHttpRequest();
+    var answerList1 = document.getElementById('answerList');
+
+    requestOnload.onreadystatechange = function() {
+      if (requestOnload.readyState === 4) {
+        var onloadAnswers = JSON.parse(requestOnload.responseText);
+        console.log("onloadanswers " + Object.keys(onloadAnswers[1]));
+        var QuestionObj = onloadAnswers[0];
+        //console.log(QuestionObj);
+        var titleQuestion = document.getElementById('titleQuestion');
+
+        titleQuestion.innerHTML = ("<h3>" + QuestionObj.question + "</h3>"
+    // "<p>" +QuestionObj.username+"On"+QuestionObj.date+" </p>"
+      );
+
+
+        onloadAnswers.slice(1).forEach(function(object) {
+
+          var OAID = "AID" + object.AID;
+          var OAusername = object.username;
+          var OAdate = object.date;
+          var OAanswer = object.answer;
+
+            answerList1.innerHTML += ("<li>From " + OAusername + " on " + OAdate + " Answer:  " + OAanswer)
+        })
+      }
+    };
+    requestOnload.open("GET", "/questionAnswer", true);
+    requestOnload.send();
 
     var socket = io();
     document.getElementById('sendAnswer').addEventListener('click', function(e) {
-        var input = document.getElementById('answerInput');
-        var inputClean = input.value.replace(/[\>\<\'\"\%\\]/g,"")
-        console.log('--input',input);
-        var answerList = document.getElementById('answerList');
-        e.preventDefault();
-        socket.emit('answer in',
-            inputClean);
-        input.value = '';
+      var input = document.getElementById('answerInput');
+      var inputClean = input.value.replace(/[\>\<\'\"\%\\]/g, "");
+      console.log('--input', input);
+      var answerList = document.getElementById('answerList');
+      e.preventDefault();
+      socket.emit('answer in',
+        inputClean);
+      input.value = '';
     });
 
 
     socket.on('answer out', function(reply) {
-       
 
 
-        answerList.innerHTML += ("<li id='ans2'>From " + reply+"</li>");
+
+      answerList.innerHTML += ("<li id='ans2'>From " + reply + "</li>");
 
 
     });
-    </script>
+  </script>
 </body>
 
 </html>
