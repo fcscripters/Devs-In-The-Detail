@@ -12,18 +12,18 @@
         <li id ="ans1">Hello</li>
       </ul>
     <a href="/index.html">Back</a>
-    <form id="answerForm"  action="" autocomplete="off">
+   
         <input id="answerInput"autocomplete="off" />
-        <button>Send</button>
-    </form>
+        <button id="sendAnswer">Send</button>
+  
     <script type="text/javascript">
 
     var socket = io();
-    document.getElementsByTagName('form')[0].addEventListener('submit', function(e) {
+    document.getElementById('sendAnswer').addEventListener('click', function(e) {
         var input = document.getElementById('answerInput');
         var inputClean = input.value.replace(/[\>\<\'\"\%\\]/g,"")
         console.log('--input',input);
-        var messages = document.getElementById('answerList');
+        var answerList = document.getElementById('answerList');
         e.preventDefault();
         socket.emit('answer in',
             inputClean);
@@ -32,10 +32,11 @@
 
 
     socket.on('answer out', function(reply) {
-        console.log(reply);
+       
 
 
-       answerList.innerHTML += ("<li id='ans2'>From " + reply+"</li>");
+        answerList.innerHTML += ("<li id='ans2'>From " + reply+"</li>");
+
 
     });
     </script>

@@ -11,6 +11,7 @@ var answers = fs.readFileSync(__dirname + '/answers.html');
 var port = process.env.PORT || 8000;
 console.log(process.env.clientID);
 var sessions = {};
+var qid;
 
 function handler(req, res) {
   var urlArray = req.url.split('/');
@@ -37,15 +38,18 @@ function handler(req, res) {
     }
  else if (req.method === 'GET' && req.url === '/topten') {
     db.lastTenQs(function(replies, qCount) {
+      //console.log("We are in the topten handler"+ replies);
       var filterReply = replies.filter(function(Qobj) {
         return Qobj;
       });
       res.end(JSON.stringify(filterReply));
     });
   } else if (req.method === "POST" && req.url.indexOf('/questions') > -1) {
-    var qid = req.url.split('/');
+    var requrlArray = req.url.split('/');
+    qid = requrlArray[2];
+    console.log("Post PROBLEM WITH SECOND ATTEMPT TO GAIN " + qid);
     //('/')[2].toString();
-    console.log("Im in the GET Request questions From FrontEnd" + qid);
+    
     res.write(answers);
     res.end();
   } else {
@@ -75,19 +79,28 @@ function manageConnection(socket) {
   socket.on('disconnect', function() {
     console.log('user disconnected');
   });
-  socket.on('message in', function(msg) {
-    //console.log(msg);
-    db.addQHash(sessions.gituser, msg, new Date());
+
+  socket.on('question in', function(msg) {
+        db.addQHash(sessions.gituser, msg, new Date());
+
 
     function lastTenQsCallback(replies) {
-      io.emit('message out', replies);
+      
+     var filterReply2 = replies.filter(function(Qobj) {
+          return Qobj;
+      });
+      
+      io.emit('question out',filterReply2);
+      
     }
     db.lastTenQs(lastTenQsCallback);
   });
 
   socket.on('answer in', function(answer) {
-    //console.log(answer);
-    db.addAHash('User', answer, '01/01/2000');
+    
+    qid = qid.replace('QIDkey','');
+    console.log("ANSWER Socket "+ qid.replace('QIDkey',''));
+    db.addAHash('User', answer, '01/01/2000', qid);
     io.emit('answer out', answer);
 
     /*

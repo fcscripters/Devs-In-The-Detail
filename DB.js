@@ -16,10 +16,15 @@ db.addQHash = function(username, question, date){
 
 console.log(qCount);
 
-db.addAHash = function(username, answer, date){
+db.addAHash = function(username, answer, date, qid){
   aCount ++;
-  client.hmset(aCount , "username", username, "answer", answer, "date", date);
+  var aCountID = "A"+aCount;
+  client.hmset(aCountID, "username", username, "answer", answer, "date", date, "AID",aCountID, "QID", qid);
+  console.log ("addAHash QID " + qid);
+  console.log ("addAHash AID " + aCountID);
+  client.zadd('answer', qid, aCountID);
 };
+
 
 var QDataArr = [];
 db.lastTenQs = function(callback){
@@ -39,7 +44,7 @@ db.lastTenQs = function(callback){
     .hgetall(i-9)
     .exec(function(err, replies){
 
-        callback(replies,qCount);
+        callback(replies);
         return(replies);
   });
 
