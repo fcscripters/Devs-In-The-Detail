@@ -11,6 +11,7 @@ var answers = fs.readFileSync(__dirname + '/answers.html');
 var port = process.env.PORT || 8000;
 console.log(process.env.clientID);
 var sessions = {};
+var qid;
 
 function handler(req, res) {
   var urlArray = req.url.split('/');
@@ -44,9 +45,10 @@ function handler(req, res) {
       res.end(JSON.stringify(filterReply));
     });
   } else if (req.method === "POST" && req.url.indexOf('/questions') > -1) {
-    var qid = req.url.split('/');
+    var requrlArray = req.url.split('/');
+    qid = requrlArray[2];
+    console.log("Post PROBLEM WITH SECOND ATTEMPT TO GAIN " + qid);
     //('/')[2].toString();
-    console.log("Im in the POST Request questions From FrontEnd" + qid[2]);
     
     res.write(answers);
     res.end();
@@ -79,8 +81,7 @@ function manageConnection(socket) {
   });
 
   socket.on('question in', function(msg) {
-    console.log( "I'm in the SOCKET" + msg);
-    db.addQHash(sessions.gituser, msg, new Date());
+        db.addQHash(sessions.gituser, msg, new Date());
 
 
     function lastTenQsCallback(replies) {
@@ -96,10 +97,10 @@ function manageConnection(socket) {
   });
 
   socket.on('answer in', function(answer) {
-    //console.log(answer);
-    db.addAHash('User', answer, '01/01/2000');
     
-
+    qid = qid.replace('QIDkey','');
+    console.log("ANSWER Socket "+ qid.replace('QIDkey',''));
+    db.addAHash('User', answer, '01/01/2000', qid);
     io.emit('answer out', answer);
 
     /*
