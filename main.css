@@ -1,0 +1,45 @@
+body {
+  font-family: Futura ;
+  background-color: #FFCC66;
+  text-align: center;
+
+}
+h2 {
+  font-size: 3em;
+  text-align: center;
+  margin: 0.1em;
+
+}
+.header p{
+  font-size: 1.5em;
+  text-align: center;
+}
+#question1{
+  margin-bottom: 2px;
+}
+
+#messages{
+  font-size: 0.7em;
+  margin: 0.2em;
+  text-align: center;
+  border-bottom: 1px black solid;
+  margin: 0.25em;
+  background-color: #B2D1FF;
+}
+.question{
+  text-align: center;
+}
+.ask{
+  text-align: center;
+}
+#sendQuestion{
+  text-align: center;
+}
+#questionInput{
+  text-align: center;
+  width:100%;
+}
+
+.button {
+  border-bottom: 1px black solid;
+}
