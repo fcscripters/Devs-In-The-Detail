@@ -49,9 +49,23 @@ function handler(req, res) {
     qid = requrlArray[2];
     console.log("Post PROBLEM WITH SECOND ATTEMPT TO GAIN " + qid);
     //('/')[2].toString();
-    
+
     res.write(answers);
     res.end();
+  } else if (req.method === 'GET' && req.url === '/questionAnswer') {
+    qid = qid.replace('QIDkey','');
+    console.log("We are in the questionAnswer handler"+qid);
+
+    db.lastFiveAs(qid, function(repliesAs) {
+      //will not return RepliesAs
+         var filterRepliesAs = repliesAs.filter(function(Qobj) {
+         return Qobj;
+       });
+
+
+       res.end(JSON.stringify(filterRepliesAs));
+     });
+
   } else {
     fs.readFile(__dirname + req.url, function(err, file) {
       if (err) {
@@ -85,22 +99,22 @@ function manageConnection(socket) {
 
 
     function lastTenQsCallback(replies) {
-      
+
      var filterReply2 = replies.filter(function(Qobj) {
           return Qobj;
       });
-      
+
       io.emit('question out',filterReply2);
-      
+
     }
     db.lastTenQs(lastTenQsCallback);
   });
 
   socket.on('answer in', function(answer) {
-    
+
     qid = qid.replace('QIDkey','');
     console.log("ANSWER Socket "+ qid.replace('QIDkey',''));
-    db.addAHash('User', answer, '01/01/2000', qid);
+    db.addAHash(sessions.gituser, answer, new Date(), qid);
     io.emit('answer out', answer);
 
     /*

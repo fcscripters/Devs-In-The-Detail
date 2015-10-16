@@ -16,10 +16,10 @@
         <p id="question1">Question</p>
         <p>Date</p>
     </div>
-    
+
         <input id="questionInput" autocomplete="off" />
         <button id="sendQuestion">Send</button>
- 
+
     <script src="/socket.io/socket.io.js"></script>
     <script>
     var requestOnload = new XMLHttpRequest();
@@ -35,7 +35,7 @@
                 var TTdate = object.date;
                 var TTquestion = object.question;
 
-                messages.innerHTML += ("<li>From " + TTusername + " on " + TTdate + " Question:  " + TTquestion + "<button id=" + TTQID + " onclick=sendToAnswerPage(" + TTQID + ")>Answers</button> </li>")
+                messages.innerHTML += ("<li>From " + TTusername + " on " + TTdate + " Question:  " + TTquestion + "<button id=" + TTQID + " onclick=sendToAnswerPage('" + TTQID + "')>Answers</button> </li>")
             })
        }
     }
@@ -45,26 +45,26 @@
 
 
     var socket = io();
- 
+
       document.getElementById('sendQuestion').addEventListener('click',function(e){
         e.preventDefault();
         var input = document.getElementById('questionInput');
         var inputClean = input.value.replace(/[\>\<\'\"\%\\]/g,"")
         console.log('--input',inputClean);
         var messages = document.getElementById('messages');
-       
+
         socket.emit('question in',
         inputClean);
 
         input.value = '';
     });
 
-   
+
 
     socket.on('question out', function(reply) {
         messages.innerHTML = '';
         var updateQuestions =reply;
-      
+
 
         updateQuestions.forEach(function(object) {
 
@@ -76,17 +76,17 @@
 
                 messages.innerHTML += ("<li>From " + UQusername + " on " + UQdate + " Question:  " + UQquestion + "<button id=" + UQQID + " onclick=sendToAnswerPage('" + UQQIDkey + "')>Answers</button> </li>")
         });
-        
+
 
 
     });
 
     function sendToAnswerPage(ID) {
-      
+
         var request = new XMLHttpRequest();
         request.onreadystatechange = function() {
             if (request.readyState === 4) {
-              console.log(request.response);
+              //console.log(request.response);
               document.write(request.response);
             }
 

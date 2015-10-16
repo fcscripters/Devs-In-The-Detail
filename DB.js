@@ -26,6 +26,32 @@ db.addAHash = function(username, answer, date, qid){
 };
 
 
+db.lastFiveAs = function(qid, callbackA){
+  //console.log('im in the getAnswers QID ' + qid);
+
+    client.ZREVRANGEBYSCORE ('answer', qid, qid, function(err, replyAs){
+          console.log('im in the getAnswers S.Set ' + replyAs);
+          console.log('im in the getAnswers QID ' + qid);
+
+          var i = replyAs.length;
+
+      client.multi()
+        .hgetall(qid)
+        .hgetall(replyAs[i])
+        .hgetall(replyAs[i-1])
+        .hgetall(replyAs[i-2])
+        .hgetall(replyAs[i-3])
+        .hgetall(replyAs[i-4])
+        .exec(function(err, repliesAs){
+          console.log("In the As multi" + repliesAs);
+          callbackA(repliesAs);
+          return(repliesAs);
+        })
+    });
+
+}
+
+
 var QDataArr = [];
 db.lastTenQs = function(callback){
   console.log('im in the lastTenQs');
