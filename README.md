@@ -103,6 +103,12 @@ Next we need to make changes to out handler, so that the first thing that happen
 
 ![image](https://github-cloud.s3.amazonaws.com/assets/11330267/10565494/352eec98-75c9-11e5-8d54-37ed7f645f01.png)
 
+![image](https://github-cloud.s3.amazonaws.com/assets/11330267/10565509/a9ccb170-75c9-11e5-8bff-f261c19cac0c.png)
+
+In your terminal your console should look similar to below as Github has now redirected you and provided you with code which you again need your handler function to interpret. 
+
+![image](https://github-cloud.s3.amazonaws.com/assets/11330267/10565509/a9ccb170-75c9-11e5-8bff-f261c19cac0c.png)
+
 
 ##### Step ? - Clean Up code ????
 -   It's time we go back and have a look at all the functions we have created our
