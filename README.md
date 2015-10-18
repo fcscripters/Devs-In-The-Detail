@@ -93,11 +93,13 @@ requestOnload.send();
 - we will be using oAuth2 for Authentication along with github as the third party
     - Github have some information in how to set up authentication [link](https://developer.github.com/v3/oauth/)
     - register application with github, for now use url as http://localhost:'yourport'
-    - 
-    - add the client_id and client_secret to our config.env file so that they are hidden
-    - ![image](https://github-cloud.s3.amazonaws.com/assets/11330267/10565409/7a2f8be2-75c7-11e5-96be-ea692176e424.png)
-    - 
-- We need to make changes to out handler, so that the first thing that happens once they enter our site address is they get redirected to githubs authentication url - `https://github.com/login/oauth/authorize`, hint - you need to change the first if statement in your handler.
+    - add the client_id and client_secret to our config.env file so that they are hidden.
+    - ![image](https://github-cloud.s3.amazonaws.com/assets/11330267/10565434/e5be1a86-75c7-11e5-8f7f-6c5d08606c79.png)
+
+![image](https://github-cloud.s3.amazonaws.com/assets/11330267/10565437/ef3fa9ee-75c7-11e5-8aa2-9d355f9971c0.png)
+
+   
+Next we need to make changes to out handler, so that the first thing that happens once they enter our site address is they get redirected to githubs authentication url - `https://github.com/login/oauth/authorize`, hint - you need to change the first if statement in your handler.
 
 
 ##### Step ? - Clean Up code ????
