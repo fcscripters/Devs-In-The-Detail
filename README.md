@@ -94,21 +94,25 @@ requestOnload.send();
     - Github have some information in how to set up authentication [link](https://developer.github.com/v3/oauth/)
     - register application with github, for now use url as http://localhost:'yourport'
     - add the client_id and client_secret to our config.env file so that they are hidden.
-    - ![image](https://github-cloud.s3.amazonaws.com/assets/11330267/10565434/e5be1a86-75c7-11e5-8f7f-6c5d08606c79.png)
+    - 
+
+![image](https://github-cloud.s3.amazonaws.com/assets/11330267/10565434/e5be1a86-75c7-11e5-8f7f-6c5d08606c79.png)
+
 
 ![image](https://github-cloud.s3.amazonaws.com/assets/11330267/10565437/ef3fa9ee-75c7-11e5-8aa2-9d355f9971c0.png)
 
    
-Next we need to make changes to out handler, so that the first thing that happens once they enter our site address is they get redirected to githubs authentication url - `https://github.com/login/oauth/authorize`, hint - you need to change the first if statement in your handler.
+- Next we need to make changes to out handler, so that the first thing that happens once they enter our site address is they get redirected to githubs authentication url - `https://github.com/login/oauth/authorize`, hint - you need to change the first if statement in your handler.
 
 ![image](https://github-cloud.s3.amazonaws.com/assets/11330267/10565494/352eec98-75c9-11e5-8d54-37ed7f645f01.png)
 
-![image](https://github-cloud.s3.amazonaws.com/assets/11330267/10565509/a9ccb170-75c9-11e5-8bff-f261c19cac0c.png)
-
-In your terminal your console should look similar to below as Github has now redirected you and provided you with code which you again need your handler function to interpret. 
+- In your terminal your console should look similar to below as Github has now redirected you and provided you with code which you again need your handler function to interpret. 
 
 ![image](https://github-cloud.s3.amazonaws.com/assets/11330267/10565509/a9ccb170-75c9-11e5-8bff-f261c19cac0c.png)
 
+- The next stage is to create functions to handle this new endpoint and extract the token need for authentication.
+A suggested method is to create three functions for your handler 'set token', get user data' and 'get token'.  
+The objective of these functions is to get a token from the authentication server(API), which matches the user and then to pass this through the resource server to then get user data back from the authentication server. 
 
 ##### Step ? - Clean Up code ????
 -   It's time we go back and have a look at all the functions we have created our
