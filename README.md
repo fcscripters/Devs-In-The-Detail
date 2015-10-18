@@ -101,6 +101,8 @@ requestOnload.send();
    
 Next we need to make changes to out handler, so that the first thing that happens once they enter our site address is they get redirected to githubs authentication url - `https://github.com/login/oauth/authorize`, hint - you need to change the first if statement in your handler.
 
+![image](https://github-cloud.s3.amazonaws.com/assets/11330267/10565494/352eec98-75c9-11e5-8d54-37ed7f645f01.png)
+
 
 ##### Step ? - Clean Up code ????
 -   It's time we go back and have a look at all the functions we have created our
