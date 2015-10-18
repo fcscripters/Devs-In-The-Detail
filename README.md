@@ -114,6 +114,10 @@ requestOnload.send();
 A suggested method is to create three functions for your handler 'set token', get user data' and 'get token'.  
 The objective of these functions is to get a token from the authentication server(API), which matches the user and then to pass this through the resource server to then get user data back from the authentication server. 
 
+###### An example of your how your handler may look. 
+
+![image](https://github-cloud.s3.amazonaws.com/assets/11330267/10566100/85d41d88-75d5-11e5-87cc-60a40583b1f5.png)
+
 ##### Step ? - Clean Up code ????
 -   It's time we go back and have a look at all the functions we have created our
 
